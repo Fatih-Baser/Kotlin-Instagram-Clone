@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "827763896848",
+    "project_id": "kotlinfirebaseinsta-38339",
+    "storage_bucket": "kotlinfirebaseinsta-38339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827763896848:android:d2f0bb11c658d369849095",
+        "android_client_info": {
+          "package_name": "com.fatihbaser.kotlininstagramclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827763896848-ik9267lsdm6g5i8u7gq6h85vari6hu7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_jNxBqGqIJu-fTEyUsRnIQ4qzGVs6Mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827763896848-ik9267lsdm6g5i8u7gq6h85vari6hu7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
