@@ -20,6 +20,18 @@ class MainActivity : AppCompatActivity() {
 
     fun singnInClicked (view: View){
 
+        auth.signInWithEmailAndPassword(userEmailText.text.toString(),passwordText.text.toString()).addOnCompleteListener { task->
+
+            if(task.isSuccessful){
+                Toast.makeText(applicationContext,"WELCOME: ${auth.currentUser?.email.toString()}",Toast.LENGTH_LONG).show()
+                val intent=Intent(applicationContext,FeedActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }.addOnFailureListener{exception ->
+
+            Toast.makeText(applicationContext,exception.localizedMessage.toString(),Toast.LENGTH_LONG).show()
+        }
     }
     fun singnUpClicked(view: View){
 
@@ -34,7 +46,7 @@ class MainActivity : AppCompatActivity() {
           }
         }.addOnFailureListener{exception ->
             if(exception !=null){
-                Toast.makeText(applicationContext,exception.localizedMessage.toString(),Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext,exception.localizedMessage.toString(),Toast.LENGTH_LONG).show()
             }
         }
 
