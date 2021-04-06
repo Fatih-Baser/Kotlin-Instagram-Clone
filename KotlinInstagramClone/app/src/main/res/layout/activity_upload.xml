@@ -6,4 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".UploadActivity">
 
+    <ImageView
+        android:id="@+id/uploadImageView"
+        android:layout_width="329dp"
+        android:layout_height="283dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="51dp"
+        android:onClick="imageViewClicked"
+        app:layout_constraintBottom_toTopOf="@+id/uploadCommentText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/selectpicture"></ImageView>
+
+    <EditText
+        android:id="@+id/uploadCommentText"
+        android:layout_width="325dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="112dp"
+        android:hint="comment"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadImageView" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="182dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginBottom="111dp"
+        android:onClick="uploudClicked"
+        android:text="Uploud"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadCommentText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
