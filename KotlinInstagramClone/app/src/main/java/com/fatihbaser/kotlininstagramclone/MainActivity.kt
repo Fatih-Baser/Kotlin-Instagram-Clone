@@ -16,6 +16,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
        auth= FirebaseAuth.getInstance()
+        val currentUser=auth.currentUser
+        if (currentUser != null){
+            val intent =Intent(applicationContext,FeedActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     fun singnInClicked (view: View){
