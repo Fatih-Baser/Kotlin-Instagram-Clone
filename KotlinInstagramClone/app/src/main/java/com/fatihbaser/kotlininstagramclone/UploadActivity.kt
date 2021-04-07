@@ -11,16 +11,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_upload.*
+import java.sql.Timestamp
+import java.util.*
 
 class UploadActivity : AppCompatActivity() {
     var selectedPicture :Uri?= null
+    private  lateinit var db: FirebaseFirestore
+    private  lateinit var auth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
+
+
+        auth=FirebaseAuth.getInstance()
+        db= FirebaseFirestore.getInstance()
     }
     fun imageViewClicked(view : View)  {
 
@@ -79,12 +90,41 @@ class UploadActivity : AppCompatActivity() {
     }
     fun uploudClicked(view: View){
 
+        //uuid
+
+        val uuid=UUID.randomUUID()
+        val imageName="$uuid.jpg"
+
         val storage=FirebaseStorage.getInstance()
-        val reference= storage.reference.child("images")
-        val imagesReference=reference.child("images").child("image.jpg")
+        val reference= storage.reference
+        val imagesReference=reference.child("images").child(imageName)
 
         if(selectedPicture != null){
-            imagesReference.putFile(selectedPicture!!).addOnSuccessListener { taskSnapshot -> }
+            imagesReference.putFile(selectedPicture!!).addOnSuccessListener { taskSnapshot ->
+
+                val uploadedPictureReference=FirebaseStorage.getInstance().reference.child("images").child(imageName)
+                uploadedPictureReference.downloadUrl.addOnSuccessListener { uri->
+                    val downloadUrl=uri.toString()
+                    println(downloadUrl)
+
+                    val  postMap= hashMapOf<String,Any>()
+                    postMap.put("dawnloadUrl",downloadUrl)
+                    postMap.put("userEmail",auth.currentUser!!.email.toString())
+                    postMap.put("comment", uploadCommentText.text.toString() )
+                    postMap.put("date",com.google.firebase.Timestamp.now())
+                    db.collection("Posts").add(postMap).addOnCompleteListener{task ->
+                        if(task.isComplete && task.isSuccessful){
+
+                            finish()
+                        }
+                    }.addOnFailureListener { exception ->
+
+                        Toast.makeText(applicationContext,exception.localizedMessage.toString(),Toast.LENGTH_LONG).show()
+                    }
+                }
+
+
+            }
         }
 
     }
