@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
@@ -77,6 +78,14 @@ class UploadActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
     fun uploudClicked(view: View){
+
+        val storage=FirebaseStorage.getInstance()
+        val reference= storage.reference.child("images")
+        val imagesReference=reference.child("images").child("image.jpg")
+
+        if(selectedPicture != null){
+            imagesReference.putFile(selectedPicture!!).addOnSuccessListener { taskSnapshot -> }
+        }
 
     }
 }
