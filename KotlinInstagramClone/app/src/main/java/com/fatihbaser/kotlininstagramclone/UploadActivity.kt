@@ -1,4 +1,4 @@
-package com.fatihbaser.kotlininstagramclone
+ package com.fatihbaser.kotlininstagramclone
 
 import android.Manifest
 import android.app.Activity

@@ -5,17 +5,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.sql.Timestamp
 
 class FeedActivity : AppCompatActivity() {
 
     private  lateinit var auth : FirebaseAuth
+    private  lateinit var db : FirebaseFirestore
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         val menuInflater =menuInflater
         menuInflater.inflate(R.menu.options_menu,menu)
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun getDataFromFirestore(){
+    db.collection("Posts").addSnapshotListener { snapshot, exception ->
+
+        if(exception !=null){
+            Toast.makeText(applicationContext,exception.localizedMessage.toString(),Toast.LENGTH_LONG).show()
+        }else{
+            if(snapshot !=null){
+                if(!snapshot.isEmpty){
+                    val documents=snapshot.documents
+                    for(document in documents){
+                        val comment=document.get("comment") as String
+                        val userEmail=document.get("userEmail") as String
+                        val downloadUrl =document.get("dawnloadUrl") as String
+                        val timestamp=document.get("date") as com.google.firebase.Timestamp
+                        val date =timestamp.toDate()
+
+                        println(comment)
+                        println(userEmail)
+                        println(downloadUrl)
+                        println(date)
+
+                    }
+                }
+            }
+        }
+    }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -43,5 +75,7 @@ class FeedActivity : AppCompatActivity() {
 
         auth= FirebaseAuth.getInstance()
 
+        db= FirebaseFirestore.getInstance()
+        getDataFromFirestore()
     }
 }
